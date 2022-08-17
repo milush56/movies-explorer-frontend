@@ -1,0 +1,117 @@
+.navtab {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.navtab__button-container {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  border-radius: 0 0 10px 10px;
+  background-color: #f5f5f5;
+  padding-bottom: 30px;
+}
+
+.navtab__about-button {
+  width: 96px;
+  height: 36px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  line-height: 22px;
+  background: #e8e8e8;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.navtab__techs-button {
+  width: 96px;
+  height: 36px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  line-height: 22px;
+  background: #e8e8e8;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.navtab__aboutme-button {
+  width: 96px;
+  height: 36px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  line-height: 22px;
+  background: #e8e8e8;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .navtab {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .navtab {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .promo__title {
+    max-width: 292px;
+    padding-top: 220px;
+    padding-bottom: 212px;
+    font-size: 29px;
+    line-height: 37px;
+  }
+
+  .navtab__about-button {
+    width: 82px;
+    height: 26px;
+    margin-right: 6px;
+    font-size: 10px;
+    border-radius: 6px;
+  }
+
+  .navtab__techs-button {
+    width: 82px;
+    height: 26px;
+    margin-right: 6px;
+    font-size: 10px;
+    border-radius: 6px;
+  }
+
+  .navtab__aboutme-button {
+    width: 82px;
+    height: 26px;
+    margin-right: 6px;
+    font-size: 10px;
+    border-radius: 6px;
+  }
+
+  .navtab__button-container {
+    padding-bottom: 17px;
+  }
+}

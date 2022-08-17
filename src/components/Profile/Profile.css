@@ -1,0 +1,125 @@
+.profile {
+  max-width: 410px;
+  margin: 74px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__title {
+  margin: 0;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+}
+
+.profile__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 106px;
+}
+
+.profile__container {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e8e8e8;
+  padding-top: 17px;
+}
+.profile__container:last-child {
+  border-bottom: none;
+}
+
+.profile__signature {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  color: #000000;
+  align-self: center;
+}
+
+.profile__item {
+  align-self: center;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: right;
+  color: #000000;
+  text-align: right;
+  border: none;
+}
+
+.profile__edit {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 0;
+  padding-top: 204px;
+  cursor: pointer;
+}
+
+.profile__exit {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #ee3465;
+  margin: 0;
+  padding-top: 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    margin-top: 230px;
+  }
+
+  .profile__form {
+    margin-top: 80px;
+  }
+
+  .profile__edit {
+    padding-top: 194px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile {
+    max-width: 260px;
+    margin: 46px auto 0;
+  }
+
+  .profile__form {
+    margin-top: 63px;
+  }
+
+  .profile__edit {
+    padding-top: 360px;
+  }
+
+  .profile__edit {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .profile__exit {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

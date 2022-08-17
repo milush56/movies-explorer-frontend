@@ -11,64 +11,44 @@ function Techs() {
           На курсе веб-разработки мы освоили технологии, которые применили в
           дипломном проекте.
         </p>
-        <ul className="techs__button-container">
-          <li>
-            <button
-              className="techs__html-button"
-              type="button"
-              aria-label="HTML"
-            >
+        <ul className="techs__buttons-container">
+          <li className="techs__button-container">
+            <button className="techs__button" type="button" aria-label="HTML">
               HTML
             </button>
           </li>
-          <li>
-            <button
-              className="techs__css-button"
-              type="button"
-              aria-label="CSS"
-            >
+          <li className="techs__button-container">
+            <button className="techs__button" type="button" aria-label="CSS">
               CSS
             </button>
           </li>
-          <li>
-            <button
-              className="techs__js-button"
-              type="button"
-              aria-label="JS"
-            >
+          <li className="techs__button-container">
+            <button className="techs__button" type="button" aria-label="JS">
               JS
             </button>
           </li>
-          <li>
-            <button
-              className="techs__react-button"
-              type="button"
-              aria-label="React"
-            >
+          <li className="techs__button-container">
+            <button className="techs__button" type="button" aria-label="React">
               React
             </button>
           </li>
-          <li>
-            <button
-              className="techs__git-button"
-              type="button"
-              aria-label="Git"
-            >
+          <li className="techs__button-container">
+            <button className="techs__button" type="button" aria-label="Git">
               Git
             </button>
           </li>
-          <li>
+          <li className="techs__button-container">
             <button
-              className="techs__express-button"
+              className="techs__button"
               type="button"
               aria-label="Express"
             >
               Express.js
             </button>
           </li>
-          <li>
+          <li className="techs__button-container">
             <button
-              className="techs__mongodb-button"
+              className="techs__button"
               type="button"
               aria-label="mongoDB"
             >

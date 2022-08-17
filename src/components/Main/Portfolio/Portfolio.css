@@ -49,5 +49,40 @@
 }
 
 .portfolio__link-logo {
-    width: 29px;
+  width: 29px;
+}
+
+@media screen and (max-width: 768px) {
+  .portfolio__container {
+    padding: 0 50px 70px;
+  }
+
+  .portfolio__subtitle {
+    font-size: 28px;
+  }
+
+  .portfolio__link-logo {
+    width: 22px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .portfolio__container {
+    padding: 0 14px 70px;
+  }
+
+  .portfolio__title {
+    font-size: 14px;
+    line-height: 20px;
+    padding-bottom: 20px;
+  }
+
+  .portfolio__subtitle {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio__link-logo {
+    width: 10px;
+  }
 }
