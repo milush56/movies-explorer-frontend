@@ -42,6 +42,8 @@
   line-height: 50px;
   letter-spacing: -0.04em;
   margin: 0;
+  text-decoration: none;
+  color: black;
 }
 
 .portfolio__site:last-child {
@@ -52,17 +54,34 @@
   width: 29px;
 }
 
-@media screen and (max-width: 768px) {
-  .portfolio__container {
-    padding: 0 50px 70px;
-  }
-
+@media screen and (max-width: 530px) {
   .portfolio__subtitle {
-    font-size: 28px;
+    font-size: 20px;
   }
 
   .portfolio__link-logo {
-    width: 22px;
+    width: 18px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .portfolio__container {
+    padding: 0 14px 70px;
+  }
+
+  .portfolio__title {
+    font-size: 14px;
+    line-height: 20px;
+    padding-bottom: 20px;
+  }
+
+  .portfolio__subtitle {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio__link-logo {
+    width: 10px;
   }
 }
 

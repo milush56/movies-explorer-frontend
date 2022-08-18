@@ -34,7 +34,7 @@
 .movies-card__save {
   width: 30px;
   height: 30px;
-  background-image: url(../../../images/save.png);
+  background-image: url(../../../images/save.svg);
   background-position: center;
   background-repeat:no-repeat;
   background-color: transparent;
@@ -51,13 +51,13 @@
 }
 
 .movies-card__save_active {
-  background-image: url(../../../images/save-active.png);
+  background-image: url(../../../images/save-active.svg);
 }
 
 .movies-card__delete {
   width: 30px;
   height: 30px;
-  background-image: url(../../../images/delete.png);
+  background-image: url(../../../images/delete.svg);
   background-position: center;
   background-repeat:no-repeat;
   background-color: transparent;

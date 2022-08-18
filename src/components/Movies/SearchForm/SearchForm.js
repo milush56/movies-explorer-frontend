@@ -15,6 +15,7 @@ function SearchForm() {
             placeholder="Фильм"
             minLength={2}
             maxLength={40}
+            required
           ></input>
         </div>
         <div className="searchform__toggle-container">

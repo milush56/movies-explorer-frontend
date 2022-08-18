@@ -112,7 +112,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 560px) {
   .register {
     max-width: 260px;
     margin: 56px auto 0;

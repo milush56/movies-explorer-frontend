@@ -53,7 +53,7 @@
 }
 
 .searchform__button {
-  background: url(../../../images/find.png) no-repeat center;
+  background: url(../../../images/find.svg) no-repeat center;
   width: 36px;
   height: 36px;
   border: none;
@@ -123,7 +123,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 580px) {
   .searchform {
     max-width: 300px;
     padding-bottom: 109px;
@@ -145,7 +145,7 @@
 
   .searchform__find-button {
     order: 1;
-    background: url(../../../images/find.png) no-repeat center;
+    background: url(../../../images/find.svg) no-repeat center;
     width: 36px;
     height: 36px;
     border: none;

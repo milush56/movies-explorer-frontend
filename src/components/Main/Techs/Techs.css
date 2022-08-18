@@ -87,11 +87,20 @@
 }
 
 @media screen and (max-width: 768px) {
+  .techs__buttons-container {
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding-top: 50px;
+  }
 }
 
 @media screen and (max-width: 320px) {
   .techs__container {
     padding: 0 18px 100px;
+    background-color: #ffffff;
   }
 
   .techs__title {
@@ -114,19 +123,14 @@
     line-height: 16px;
   }
 
-  .techs__buttons-container {
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding-top: 50px;
-  }
-
   .techs__button {
     width: 84px;
     height: 57px;
     font-size: 12px;
     line-height: 15px;
+  }
+
+  .techs__button-container {
+    margin-right: 0;
   }
 }

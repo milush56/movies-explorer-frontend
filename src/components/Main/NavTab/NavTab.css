@@ -73,12 +73,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
-  .navtab {
-    padding-left: 14px;
-    padding-right: 14px;
-  }
-
+@media screen and (max-width: 360px) {
   .promo__title {
     max-width: 292px;
     padding-top: 220px;
@@ -113,5 +108,12 @@
 
   .navtab__button-container {
     padding-bottom: 17px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .navtab {
+    padding-left: 14px;
+    padding-right: 14px;
   }
 }
