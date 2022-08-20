@@ -1,0 +1,136 @@
+.techs__container {
+  max-width: 1140px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  padding: 0 70px 100px;
+  background-color: #f5f5f5;
+}
+
+.techs__title {
+  width: 100%;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  align-self: flex-start;
+  padding-top: 95px;
+  padding-bottom: 23px;
+  border-bottom: 1px solid;
+  margin: 0;
+}
+
+.techs__subtitle {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  margin: 0;
+  padding: 90px 0 0 0;
+}
+
+.techs__paragraph {
+  max-width: 460px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  max-width: 460px;
+  margin: 0;
+  padding-top: 26px;
+}
+
+.techs__buttons-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  padding-top: 100px;
+}
+
+.techs__button-container {
+  margin-right: 10px;
+}
+
+.techs__button-container:last-child {
+  margin-right: 0;
+}
+
+.techs__button {
+  width: 90px;
+  height: 60px;
+  width: 90px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  background: #e8e8e8;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.techs__button:last-child {
+  margin-right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .techs__buttons-container {
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding-top: 50px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .techs__container {
+    padding: 0 18px 100px;
+    background-color: #ffffff;
+  }
+
+  .techs__title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-top: 126px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid;
+    margin: 0;
+  }
+
+  .techs__subtitle {
+    font-size: 30px;
+    line-height: 36px;
+    padding: 60px 0 0 0;
+  }
+
+  .techs__paragraph {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .techs__button {
+    width: 84px;
+    height: 57px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .techs__button-container {
+    margin-right: 0;
+  }
+}
