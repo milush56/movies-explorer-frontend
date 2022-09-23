@@ -69,6 +69,10 @@
   margin: 0;
   padding-top: 204px;
   cursor: pointer;
+  color: #000000;
+  border: none;
+  outline: none;
+  transition: 0.3s linear;
 }
 
 .profile__exit {
@@ -83,6 +87,17 @@
   padding-top: 16px;
   cursor: pointer;
   text-decoration: none;
+}
+
+.profile__input-error {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+  margin-top: 5px;
+  opacity: 0;
 }
 
 @media screen and (max-width: 768px) {
