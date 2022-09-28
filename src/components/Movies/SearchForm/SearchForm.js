@@ -1,33 +1,38 @@
 import React from "react";
-import { useState } from "react";
 import "./SearchForm.css";
+import useFormValidator from "../../../hooks/useFormValidator";
 
-function SearchForm({ nameSearchFilm, isShortMovie, toggleFilm }) {
-  const [filmValue, setFilmValue] = useState("");
-  const [error, setError] = useState(false);
-  const [formValid, setFormValid] = React.useState(false);
+function SearchForm({ nameSearchFilm, keyWordSearch, isShortMovieSearch }) {
+  const { values, handleChange, isValid } = useFormValidator({
+    movie: keyWordSearch,
+  });
+  const [isValidForm, setIsValidForm] = React.useState(true);
 
-  const searchFilm = (e) => {
-    setFilmValue(e.target.value);
-    if (e.target.value.length === 0) {
-      setError("Введите ключевое слово");
-    } else {
-      setError("");
-    }
-  };
+  const defaultShotMovieChecked =
+    isShortMovieSearch !== undefined ? isShortMovieSearch : true;
+  const [isShortMovie, setIsShortMovie] = React.useState(
+    defaultShotMovieChecked
+  );
+
+  function toggleFilm(e) {
+    setIsShortMovie(e.target.checked);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    nameSearchFilm(filmValue);
+    if (!isValid && !values.movie) {
+      setIsValidForm(false);
+    } else {
+      const dataSearch = { movie: values.movie, isShortMovie: isShortMovie };
+      nameSearchFilm(dataSearch);
+    }
   };
 
   React.useEffect(() => {
-    if (filmValue && !error) {
-      setFormValid(true);
-    } else {
-      setFormValid(false);
+    if (isValid) {
+      setIsValidForm(true);
     }
-  }, [filmValue, error]);
+  }, [isValid]);
 
   return (
     <section className="searchform">
@@ -36,28 +41,23 @@ function SearchForm({ nameSearchFilm, isShortMovie, toggleFilm }) {
           <button
             type="submit"
             className="searchform__find-button"
-            onClick={handleSubmit}
-            disabled={!formValid}
           />
           <input
             type="text"
             className="searchform__item"
-            id="film"
-            name="film"
+            name="movie"
             placeholder="Фильм"
-            minLength={2}
+            minLength={1}
             maxLength={40}
             required=""
-            value={filmValue || ""}
-            onChange={searchFilm}
+            value={values.movie || ""}
+            onChange={handleChange}
           ></input>
         </div>
         <div className="searchform__toggle-container">
           <button
             type="submit"
             className="searchform__button"
-            onClick={handleSubmit}
-            disabled={!formValid}
           ></button>
           <input
             type="checkbox"
@@ -70,7 +70,9 @@ function SearchForm({ nameSearchFilm, isShortMovie, toggleFilm }) {
           <label className="searchform__label">Короткометражки</label>
         </div>
       </form>
-      <span className="searchform__item-error">{error}</span>
+      <span className="searchform__item-error">
+        {!isValidForm && "Нужно ввести ключевое слово"}
+      </span>
     </section>
   );
 }

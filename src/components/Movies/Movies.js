@@ -6,23 +6,25 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 function Movies({
   movies,
   nameSearchFilm,
-  toggleFilm,
-  isShortMovie,
+  keyWordSearch,
+  isShortMovieSearch,
   onSave,
-  isSuccessSearch
+  isSuccessSearch,
+  savedMovies
 }) {
   return (
     <section>
       <SearchForm
         nameSearchFilm={nameSearchFilm}
-        toggleFilm={toggleFilm}
-        isShortMovie={isShortMovie}
+        keyWordSearch={keyWordSearch}
+        isShortMovieSearch={isShortMovieSearch}
       />
       <MoviesCardList
         isSavedMoviesPage={false}
         movies={movies}
         onSave={onSave}
         isSuccessSearch={isSuccessSearch}
+        savedMovies={savedMovies}
       />
     </section>
   );

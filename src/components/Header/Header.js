@@ -14,7 +14,7 @@ function Header({ loggedIn }) {
           </Link>
           <ul className="header__container">
             {loggedIn ? (
-              <Route exact path="/(movies|saved-movies|profile)">
+              <Route exact path="/(movies|saved-movies|profile|/|)">
                 <li className="header__films">
                   <Link to="/movies" className="header__film">
                     Фильмы
@@ -30,7 +30,7 @@ function Header({ loggedIn }) {
                 </li>
                 <li className="header__burger">
                   <input id="header__toggle" type="checkbox" />
-                  <label className="header__btn" for="header__toggle">
+                  <label className="header__btn" htmlFor="header__toggle">
                     <span></span>
                   </label>
                   <ul className="header__box">

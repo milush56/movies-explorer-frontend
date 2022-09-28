@@ -7,14 +7,13 @@ function SavedMovies({
   movies,
   onDelete,
   isSuccessSearch,
-  nameSearchFilm,
-  handleMoviesTumbler
+  nameSearchFilm
 }) {
+  console.log(movies);
   return (
     <section>
       <SearchForm
         nameSearchFilm={nameSearchFilm}
-        handleMoviesTumbler={handleMoviesTumbler}
       />
       <MoviesCardList
         isSavedMoviesPage={true}

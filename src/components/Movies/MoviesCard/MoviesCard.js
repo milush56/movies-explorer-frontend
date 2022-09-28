@@ -5,10 +5,13 @@ import { Route, Switch } from "react-router-dom";
 function MoviesCard({
   card,
   onSave,
-  onDelete
+  onDelete,
+  savedMovies
 }) {
-  console.log(card);
-  /* const isLiked = !card.isSavedMovies && card.likedMovies(card.movie); */
+  const isSaved = card.id && savedMovies.some((m) => m.movieId === card.id);
+  const cardSaveButtonClassName = `movies-card__save ${
+    isSaved ? "movies-card__save_active" : "movies-card__save"
+  }`;
 
   function handleSaveCard() {
     onSave(card);
@@ -32,10 +35,7 @@ function MoviesCard({
         <Switch>
           <Route path="/movies">
             <button
-              /* className={`movies-card__save ${
-                isLiked ? "movies-card__save_active" : ""
-              }`} */
-              className="movies-card__save"
+              className={cardSaveButtonClassName}
               type="button"
               aria-label="сохранить"
               onClick={handleSaveCard}
@@ -50,7 +50,12 @@ function MoviesCard({
           </Route>
         </Switch>
       </div>
+      <Route path="/movies">
       <img src={`https://api.nomoreparties.co/${card.image.url}`} alt={card.nameRU} />
+      </Route>
+      <Route path="/saved-movies">
+      <img src={card.image} alt={card.nameRU} />
+      </Route>
     </li>
   );
 }

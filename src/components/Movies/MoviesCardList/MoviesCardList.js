@@ -4,7 +4,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import useWindowSize from "../../../hooks/useWindowSize";
 
 
-function MoviesCardList({ movies, onSave, onDelete, isSavedMoviesPage, isSuccessSearch }) {
+function MoviesCardList({ movies, onSave, onDelete, isSavedMoviesPage, isSuccessSearch, savedMovies }) {
   const windowSize = useWindowSize();
   const [maxCards, setMaxCards] = React.useState(0);
   const [loadCards, setLoadCards] = React.useState(0);
@@ -43,6 +43,7 @@ function MoviesCardList({ movies, onSave, onDelete, isSavedMoviesPage, isSuccess
                 key={movieCard.id}
                 isSavedMoviesPage={isSavedMoviesPage}
                 onSave={onSave}
+                savedMovies={savedMovies}
               ></MoviesCard>
             );
           } else {

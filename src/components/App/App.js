@@ -31,9 +31,9 @@ function App() {
   const [isSuccessSearchMovie, setIsSuccessSearchMovie] = React.useState(true);
   const [isSuccessSearchSavedMovie, setIsSuccessSearchSavedMovie] =
     React.useState(true);
-  const [shortMovies, setShortMovies] = useState(false);
 
   function handleRegister(name, email, password) {
+    setIsOpenPreloader(true);
     return MainApi.register(name, email, password)
       .then((res) => {
         if (res) {
@@ -44,7 +44,7 @@ function App() {
       .catch((err) => {
         console.log(err);
         setRegMessage("При регистрации пользователя произошла ошибка");
-      });
+      }).finally(() => setIsOpenPreloader(false));
   }
 
   const handleLogin = (email, password) => {
@@ -85,19 +85,18 @@ function App() {
   function handleUpdateUser(name, email) {
     MainApi.newUser(name, email)
       .then((data) => {
+        console.log(data);
         setСurrentUser(data);
       })
-
       .catch((err) => {
         console.log("Ошибка. Запрос не выполнен: ", err);
       });
   }
 
   function onDelete(movie) {
+    console.log(movie);
+    setSavedMovies((savedMovies) => savedMovies.filter((c) => c._id !== movie._id));
     MainApi.deleteMovies(movie._id)
-      .then(() => {
-        setSavedMovies((state) => state.filter((c) => c._id !== movie._id));
-      })
       .catch((err) => {
         console.log("Ошибка. Запрос не выполнен: ", err);
       });
@@ -119,8 +118,7 @@ function App() {
 
   function handleSearchMovies(dataSearch) {
     setIsOpenPreloader(true);
-    let token = localStorage.getItem("jwt");
-    MoviesApi.getContent(token)
+    MoviesApi.getContent()
       .then((movies) => {
         return filterMovies(movies, dataSearch);
       })
@@ -130,10 +128,10 @@ function App() {
         setMovies(moviesFilter);
         setStatusSearchMovies(moviesFilter, setIsSuccessSearchMovie);
 
-        /* const moviesFilterJSON = JSON.stringify(moviesFilter);
+        const moviesFilterJSON = JSON.stringify(moviesFilter);
         localStorage.setItem("movies", moviesFilterJSON);
         localStorage.setItem("keyWordMovieSearch", dataSearch.movie);
-        localStorage.setItem("isShortMovieSearch", dataSearch.isShortMovie); */
+        localStorage.setItem("isShortMovieSearch", dataSearch.isShortMovie);
       })
       .catch((err) => {
         console.log("Ошибка. Запрос не выполнен: ", err);
@@ -143,7 +141,6 @@ function App() {
 
   function nameSearchSavedFilm(dataSearch) {
     setIsOpenPreloader(true);
-
     const savedMoviesInLocalStorage = JSON.parse(localStorage.savedMovies);
     const savedMoviesFilter = filterMovies(
       savedMoviesInLocalStorage,
@@ -153,10 +150,6 @@ function App() {
     setStatusSearchMovies(savedMoviesFilter, setIsSuccessSearchSavedMovie);
 
     setIsOpenPreloader(false);
-  }
-
-  function toggleFilm() {
-    setShortMovies(!shortMovies);
   }
 
   useEffect(() => {
@@ -169,7 +162,6 @@ function App() {
         .then((res) => {
           setСurrentUser(res);
         })
-
         .catch((err) => {
           console.log("Ошибка. Запрос не выполнен: ", err);
         });
@@ -185,10 +177,10 @@ function App() {
       setKeyWordMovieSearch(localStorage.keyWordMovieSearch);
     }
     if (localStorage.isShortMovieSearch) {
-      /* const isShortMovieSearchJSON = JSON.parse(
+      const isShortMovieSearchJSON = JSON.parse(
         localStorage.isShortMovieSearch
       );
-      setIsShortMovieSearch(isShortMovieSearchJSON); */
+      setIsShortMovieSearch(isShortMovieSearchJSON);
     }
   }, []);
 
@@ -203,6 +195,7 @@ function App() {
         .catch((err) => {
           console.log("Ошибка. Запрос не выполнен: ", err);
         });
+        history.push("/movies");
     }
   }, [loggedIn]);
 
@@ -213,7 +206,7 @@ function App() {
         <Switch>
           <ProtectedRoute
             path="/profile"
-            handleSignOut={loggedIn}
+            handleSignOut={signOut}
             component={Profile}
             onUpdateUser={handleUpdateUser}
             loggedIn={loggedIn}
@@ -233,12 +226,11 @@ function App() {
             movies={movies}
             nameSearchFilm={handleSearchMovies}
             keyWordSearch={keyWordMovieSearch}
-            handleMoviesTumbler={isShortMovieSearch}
             onSave={onSave}
             isSuccessSearch={isSuccessSearchMovie}
             loggedIn={loggedIn}
-            toggleFilm={toggleFilm}
-            isShortMovie={shortMovies}
+            isShortMovieSearch={isShortMovieSearch}
+            savedMovies={savedMovies}
           />
           <ProtectedRoute
             path="/saved-movies"
@@ -247,7 +239,6 @@ function App() {
             onDelete={onDelete}
             isSuccessSearch={isSuccessSearchSavedMovie}
             nameSearchFilm={nameSearchSavedFilm}
-            handleMoviesTumbler={isShortMovieSearch}
             loggedIn={loggedIn}
           />
           <Preloader isVisible={isOpenPreloader} />

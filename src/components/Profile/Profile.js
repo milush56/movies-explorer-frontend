@@ -15,20 +15,9 @@ function Profile({ handleSignOut, onUpdateUser }) {
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateUser(name, email);
+    console.log(name, email);
     changeInputDisabled();
   }
-
-  React.useEffect(() => {
-    setName(currentUser.name);
-    setEmail(currentUser.email);
-  }, [currentUser]);
-
-  useEffect(() => {
-    if (currentUser.name !== undefined) {
-      setName(currentUser.name);
-      setEmail(currentUser.email);
-    }
-  }, [currentUser]);
 
   function handleNameChange(e) {
     const validName = /^[a-zA-Z- ]+$/.test(e.target.value);
@@ -122,7 +111,7 @@ function Profile({ handleSignOut, onUpdateUser }) {
         className="profile__edit"
         type="submit"
         disabled={!formValid}
-        onClick={changeInputDisabled}
+        onClick={handleSubmit}
       >
         Редактировать
       </button>
