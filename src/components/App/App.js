@@ -118,7 +118,7 @@ function App() {
         setSavedMovies([newMovie, ...savedMovies]);
         localStorage.setItem(
           "savedMovies",
-          JSON.stringify([newMovie, ...savedMovies])
+          JSON.stringify(newMovie, ...savedMovies)
         );
       })
       .catch((err) => {
@@ -161,6 +161,7 @@ function App() {
       dataMovie,
       isShortMovie
     );
+    console.log(savedMoviesFilter.length);
     setSavedMovies(savedMoviesFilter);
     setStatusSearchMovies(savedMoviesFilter, setIsSuccessSearchSavedMovie);
 
@@ -206,7 +207,7 @@ function App() {
           console.log(savedMoviesList);
           localStorage.setItem(
             "savedMovies",
-            JSON.stringify([savedMoviesList, ...savedMovies])
+            JSON.stringify(savedMoviesList, ...savedMovies)
           );
           setSavedMovies(savedMoviesList);
         })

@@ -1,4 +1,7 @@
 export default function filterMovies(moviesList, dataMovie, isShortMovie) {
+  if (dataMovie === undefined) {
+    dataMovie = ' ';
+  }
   return moviesList.filter((movie) => {
     if (isShortMovie) {
       return (
