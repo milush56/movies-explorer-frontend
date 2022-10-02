@@ -67,3 +67,7 @@
   align-self: center;
   margin-right: 14px;
 }
+
+.movies-card__image {
+  width: 100%;
+}

@@ -2,7 +2,7 @@ import React from "react";
 import logoHeader from "../../images/logo.svg";
 import "./Header.css";
 import { Route, Switch } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 function Header({ loggedIn }) {
   return (
@@ -16,12 +16,12 @@ function Header({ loggedIn }) {
             {loggedIn ? (
               <Route exact path="/(movies|saved-movies|profile|/|)">
                 <li className="header__films">
-                  <Link to="/movies" className="header__film">
+                  <NavLink to="/movies" className="header__film" activeClassName={"header__film_active"}>
                     Фильмы
-                  </Link>
-                  <Link to="/saved-movies" className="header__save-film">
+                  </NavLink>
+                  <NavLink to="/saved-movies" className="header__save-film" activeClassName={"header__save-film_active"}>
                     Сохранённые фильмы
-                  </Link>
+                  </NavLink>
                 </li>
                 <li>
                   <Link to="/profile" className="header__account">

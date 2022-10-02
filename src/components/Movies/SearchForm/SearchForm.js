@@ -9,7 +9,7 @@ function SearchForm({ nameSearchFilm, keyWordSearch, isShortMovieSearch }) {
   const [isValidForm, setIsValidForm] = React.useState(true);
 
   const defaultShotMovieChecked =
-    isShortMovieSearch !== undefined ? isShortMovieSearch : true;
+    isShortMovieSearch !== undefined ? isShortMovieSearch : false;
   const [isShortMovie, setIsShortMovie] = React.useState(
     defaultShotMovieChecked
   );
@@ -23,8 +23,7 @@ function SearchForm({ nameSearchFilm, keyWordSearch, isShortMovieSearch }) {
     if (!isValid && !values.movie) {
       setIsValidForm(false);
     } else {
-      const dataSearch = { movie: values.movie, isShortMovie: isShortMovie };
-      nameSearchFilm(dataSearch);
+      nameSearchFilm(values.movie, isShortMovie);
     }
   };
 
@@ -33,6 +32,12 @@ function SearchForm({ nameSearchFilm, keyWordSearch, isShortMovieSearch }) {
       setIsValidForm(true);
     }
   }, [isValid]);
+
+  React.useEffect(() => {
+    if (isShortMovie === true) {
+      nameSearchFilm(values.movie, true);
+    } 
+  }, [isShortMovie]);
 
   return (
     <section className="searchform">

@@ -10,7 +10,7 @@ function Movies({
   isShortMovieSearch,
   onSave,
   isSuccessSearch,
-  savedMovies
+  savedMovies,
 }) {
   return (
     <section>

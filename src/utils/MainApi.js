@@ -93,7 +93,7 @@ export const register = (name, email, password) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(name, email, password),
+    body: JSON.stringify({name, email, password}),
   }).then((res) => {
     return checkResponse(res);
   });
@@ -102,11 +102,12 @@ export const register = (name, email, password) => {
 export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
+    credentials: "include",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(email, password),
+    body: JSON.stringify({email, password}),
   }).then((res) => {
     return checkResponse(res);
   });

@@ -7,13 +7,12 @@ function SavedMovies({
   movies,
   onDelete,
   isSuccessSearch,
-  nameSearchFilm
+  nameSearchSavedFilm
 }) {
-  console.log(movies);
   return (
     <section>
       <SearchForm
-        nameSearchFilm={nameSearchFilm}
+        nameSearchFilm={nameSearchSavedFilm}
       />
       <MoviesCardList
         isSavedMoviesPage={true}

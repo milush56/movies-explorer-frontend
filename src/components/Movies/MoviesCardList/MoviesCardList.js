@@ -28,7 +28,7 @@ function MoviesCardList({ movies, onSave, onDelete, isSavedMoviesPage, isSuccess
             return (
               <MoviesCard
                 card={movieCard}
-                key={movieCard.movieId}
+                key={movieCard._id}
                 isSavedMoviesPage={isSavedMoviesPage}
                 onDelete={onDelete}
               ></MoviesCard>

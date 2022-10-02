@@ -10,7 +10,6 @@ export const getContent = () => {
       "Content-Type": "application/json",
     },
   }).then((res) => {
-    console.log(res);
     return checkResponse(res);
   });
 };
