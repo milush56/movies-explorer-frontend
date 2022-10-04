@@ -16,6 +16,7 @@ function SearchForm({ nameSearchFilm, keyWordSearch, isShortMovieSearch }) {
 
   function toggleFilm(e) {
     setIsShortMovie(e.target.checked);
+    e.target.checked === true ? nameSearchFilm(values.movie, true) : nameSearchFilm(values.movie, false);
   }
 
   const handleSubmit = (e) => {
@@ -32,12 +33,6 @@ function SearchForm({ nameSearchFilm, keyWordSearch, isShortMovieSearch }) {
       setIsValidForm(true);
     }
   }, [isValid]);
-
-  React.useEffect(() => {
-    if (isShortMovie === true) {
-      nameSearchFilm(values.movie, true);
-    } 
-  }, [isShortMovie]);
 
   return (
     <section className="searchform">

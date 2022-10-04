@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, Redirect, useHistory } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import "./App.css";
 import Header from "../Header/Header";
@@ -20,10 +26,12 @@ import filterMovies from "../../utils/filterMovies";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setСurrentUser] = useState({});
+  const [allMovies, setAllMovies] = useState([]);
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const history = useHistory();
   const [regMessage, setRegMessage] = useState("");
+  const [profMessage, setProfMessage] = useState("");
 
   const [isOpenPreloader, setIsOpenPreloader] = React.useState(false);
   const [keyWordMovieSearch, setKeyWordMovieSearch] = React.useState("");
@@ -31,6 +39,7 @@ function App() {
   const [isSuccessSearchSavedMovie, setIsSuccessSearchSavedMovie] =
     React.useState(true);
   const [isShortMovieSearch, setIsShortMovieSearch] = React.useState(false);
+  let location = useLocation();
 
   function handleRegister(props) {
     setIsOpenPreloader(true);
@@ -43,7 +52,6 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
         setRegMessage("При регистрации пользователя произошла ошибка");
       })
       .finally(() => setIsOpenPreloader(false));
@@ -55,23 +63,25 @@ function App() {
       .then((data) => {
         localStorage.setItem("jwt", data.token);
         tokenCheck();
-        history.push("/movies");
+        history.push("/");
       })
       .catch((err) => {
-        setRegMessage("Что-то пошло не так! Попробуйте ещё раз.");
+        setRegMessage("Что-то пошло не так! Попробуйте ещё раз");
       });
   };
 
   function signOut() {
+    console.log(localStorage);
     localStorage.removeItem("jwt");
     localStorage.removeItem("movies");
     localStorage.removeItem("keyWordMovieSearch");
     localStorage.removeItem("isShortMovieSearch");
     localStorage.removeItem("savedMovies");
-    localStorage.clear();
+    window.localStorage.clear();
+    console.log(localStorage.movies);
+    setAllMovies([]);
     setMovies([]);
     setSavedMovies([]);
-    setСurrentUser({});
     setKeyWordMovieSearch("");
     setLoggedIn(false);
     history.push("/");
@@ -96,23 +106,34 @@ function App() {
   function handleUpdateUser(name, email) {
     MainApi.newUser(name, email)
       .then((data) => {
+        console.log(data);
         setСurrentUser(data);
+        setProfMessage("Данные изменены");
       })
       .catch((err) => {
-        console.log("Ошибка. Запрос не выполнен: ", err);
+        if (err === 409) {
+          setProfMessage("Пользователь с указанным email уже существует");
+        }
       });
   }
 
   function onDelete(movie) {
+    console.log(movie);
     setSavedMovies((savedMovies) =>
       savedMovies.filter((c) => c._id !== movie._id)
     );
+    /* localStorage.setItem(
+      "savedMovies",
+      JSON.stringify((savedMovies) =>
+      savedMovies.filter((c) => c._id !== movie._id)
+    )); */
     MainApi.deleteMovies(movie._id).catch((err) => {
       console.log("Ошибка. Запрос не выполнен: ", err);
     });
   }
 
   function onSave(dataMovie) {
+    console.log(dataMovie);
     MainApi.postMovies(dataMovie)
       .then((newMovie) => {
         setSavedMovies([newMovie, ...savedMovies]);
@@ -132,25 +153,19 @@ function App() {
 
   function nameSearchFilm(dataMovie, isShortMovie) {
     setIsOpenPreloader(true);
-    MoviesApi.getContent()
-      .then((movies) => {
-        return filterMovies(movies, dataMovie, isShortMovie);
-      })
-      .then((moviesFilter) => {
-        setKeyWordMovieSearch(dataMovie);
-        setIsShortMovieSearch(isShortMovie);
-        setMovies(moviesFilter);
-        setStatusSearchMovies(moviesFilter, setIsSuccessSearchMovie);
+    const moviesFilter = filterMovies(allMovies, dataMovie, isShortMovie);
+    console.log(dataMovie, isShortMovie);
+    setKeyWordMovieSearch(dataMovie);
+    setIsShortMovieSearch(isShortMovie);
+    setMovies(moviesFilter);
+    setStatusSearchMovies(moviesFilter, setIsSuccessSearchMovie);
 
-        const moviesFilterJSON = JSON.stringify(moviesFilter);
-        localStorage.setItem("movies", moviesFilterJSON);
-        localStorage.setItem("keyWordMovieSearch", dataMovie);
-        localStorage.setItem("isShortMovieSearch", isShortMovie);
-      })
-      .catch((err) => {
-        console.log("Ошибка. Запрос не выполнен: ", err);
-      })
-      .finally(() => setIsOpenPreloader(false));
+    const moviesFilterJSON = JSON.stringify(moviesFilter);
+    localStorage.setItem("movies", moviesFilterJSON);
+    localStorage.setItem("keyWordMovieSearch", dataMovie);
+    localStorage.setItem("isShortMovieSearch", isShortMovie);
+
+    setIsOpenPreloader(false);
   }
 
   function nameSearchSavedFilm(dataMovie, isShortMovie) {
@@ -161,10 +176,9 @@ function App() {
       dataMovie,
       isShortMovie
     );
-    console.log(savedMoviesFilter.length);
     setSavedMovies(savedMoviesFilter);
     setStatusSearchMovies(savedMoviesFilter, setIsSuccessSearchSavedMovie);
-
+    console.log(dataMovie, isShortMovie);
     setIsOpenPreloader(false);
   }
 
@@ -173,18 +187,18 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (loggedIn) {
-      MainApi.getUser()
-        .then((res) => {
-          setСurrentUser(res);
-        })
-        .catch((err) => {
-          console.log("Ошибка. Запрос не выполнен: ", err);
-        });
+    if (location.pathname === "/movies") {
+      const savedMoviesInLocalStorage = JSON.parse(localStorage.savedMovies);
+      console.log(savedMoviesInLocalStorage);
+      setSavedMovies(savedMoviesInLocalStorage);
     }
-  }, [loggedIn]);
+  }, [location.pathname]);
 
   React.useEffect(() => {
+    if (localStorage.movies) {
+      const moviesFilterJSON = JSON.parse(localStorage.movies);
+      setMovies(moviesFilterJSON);
+    }
     if (localStorage.keyWordMovieSearch) {
       setKeyWordMovieSearch(localStorage.keyWordMovieSearch);
     }
@@ -214,9 +228,19 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-      history.push("/movies");
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    MoviesApi.getContent()
+      .then((movies) => {
+        setAllMovies(movies);
+        localStorage.setItem("movies", JSON.stringify(movies));
+      })
+      .catch((err) => {
+        console.log("Ошибка. Запрос не выполнен: ", err);
+      });
+  }, [currentUser]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -229,6 +253,7 @@ function App() {
             component={Profile}
             onUpdateUser={handleUpdateUser}
             loggedIn={loggedIn}
+            profMessage={profMessage}
           />
           <Route path="/signup" exact>
             <Register onRegister={handleRegister} message={regMessage} />

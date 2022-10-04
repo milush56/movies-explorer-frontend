@@ -3,7 +3,7 @@ import "./Profile.css";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Profile({ handleSignOut, onUpdateUser }) {
+function Profile({ handleSignOut, onUpdateUser, profMessage }) {
   const currentUser = React.useContext(CurrentUserContext);
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -68,13 +68,13 @@ function Profile({ handleSignOut, onUpdateUser }) {
     if (currentUser.name === name && currentUser.email === email) {
       setFormValid(false);
     } else {
-      setFormValid(true);
+      setFormValid(true); 
     }
   }, [name, email, currentUser.name, currentUser.email]);
 
   return (
     <section className="profile">
-      <h2 className="profile__title">Привет, Виталий!</h2>
+      <h2 className="profile__title">Привет, {currentUser.name}!</h2>
       <form className="profile__form" onSubmit={handleSubmit}>
         <div className="profile__container">
           <span className="profile__signature">Имя</span>
@@ -89,7 +89,7 @@ function Profile({ handleSignOut, onUpdateUser }) {
             onChange={handleNameChange}
             disabled={!inputDisabled}
           ></input>
-          <span className="name-error profile__input-error">{nameError}</span>
+          <span className="profile__input-error">{nameError}</span>
         </div>
         <div className="profile__container">
           <span className="profile__signature">E-mail</span>
@@ -104,9 +104,10 @@ function Profile({ handleSignOut, onUpdateUser }) {
             onChange={handleEmailChange}
             disabled={!inputDisabled}
           ></input>
-          <span className="email-error profile__input-error">{emailError}</span>
+          <span className="profile__input-error">{emailError}</span>
         </div>
       </form>
+      <span className="profile__input-message">{profMessage}</span>
       <button
         className="profile__edit"
         type="submit"

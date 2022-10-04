@@ -1,17 +1,19 @@
+import { FORTY_DURATION } from "../utils/constants";
+
 export default function filterMovies(moviesList, dataMovie, isShortMovie) {
   if (dataMovie === undefined) {
-    dataMovie = ' ';
+    dataMovie = " ";
   }
   return moviesList.filter((movie) => {
     if (isShortMovie) {
       return (
         movie.nameRU.toLowerCase().includes(dataMovie.toLowerCase()) &&
-        movie.duration <= 40
+        movie.duration <= FORTY_DURATION
       );
     } else {
       return (
         movie.nameRU.toLowerCase().includes(dataMovie.toLowerCase()) &&
-        movie.duration > 40
+        movie.duration > FORTY_DURATION
       );
     }
   });

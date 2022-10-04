@@ -2,6 +2,7 @@ import React from "react";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import useWindowSize from "../../../hooks/useWindowSize";
+import { DESKTOP_SIZE, TABLET_SIZE, TWELWE_CARDS, EIGHT_CARDS, FIVE_CARDS, THREE_CARDS, TWO_CARDS, ONE_CARD } from "../../../utils/constants";
 
 
 function MoviesCardList({ movies, onSave, onDelete, isSavedMoviesPage, isSuccessSearch, savedMovies }) {
@@ -11,8 +12,8 @@ function MoviesCardList({ movies, onSave, onDelete, isSavedMoviesPage, isSuccess
   const [maxCardsAfterLoad, setMaxCardsAfterLoad] = React.useState(0);
 
   React.useEffect(() => {
-    setMaxCards(windowSize > 1023 ? 12 : windowSize > 767 ? 8 : 5);
-    setLoadCards(windowSize > 1023 ? 3 : windowSize > 767 ? 2 : 1);
+    setMaxCards(windowSize > DESKTOP_SIZE ? TWELWE_CARDS : windowSize > TABLET_SIZE ? EIGHT_CARDS : FIVE_CARDS);
+    setLoadCards(windowSize > DESKTOP_SIZE ? THREE_CARDS : windowSize > TABLET_SIZE ? TWO_CARDS : ONE_CARD);
     setMaxCardsAfterLoad(maxCards);
   }, [windowSize, maxCards]);
 
