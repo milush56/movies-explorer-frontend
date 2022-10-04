@@ -71,7 +71,6 @@ function App() {
   };
 
   function signOut() {
-    console.log(localStorage);
     localStorage.removeItem("jwt");
     localStorage.removeItem("movies");
     localStorage.removeItem("keyWordMovieSearch");
@@ -119,27 +118,22 @@ function App() {
 
   function onDelete(movie) {
     console.log(movie);
-    setSavedMovies((savedMovies) =>
-      savedMovies.filter((c) => c._id !== movie._id)
-    );
-    /* localStorage.setItem(
-      "savedMovies",
-      JSON.stringify((savedMovies) =>
-      savedMovies.filter((c) => c._id !== movie._id)
-    )); */
+    const movieDeleted = savedMovies.filter((c) => c._id !== movie._id);
+    console.log(movieDeleted);
+    setSavedMovies(movieDeleted);
+    localStorage.setItem("savedMovies", JSON.stringify(movieDeleted));
     MainApi.deleteMovies(movie._id).catch((err) => {
       console.log("Ошибка. Запрос не выполнен: ", err);
     });
   }
 
   function onSave(dataMovie) {
-    console.log(dataMovie);
     MainApi.postMovies(dataMovie)
       .then((newMovie) => {
         setSavedMovies([newMovie, ...savedMovies]);
         localStorage.setItem(
           "savedMovies",
-          JSON.stringify(newMovie, ...savedMovies)
+          JSON.stringify([newMovie, ...savedMovies])
         );
       })
       .catch((err) => {
@@ -171,6 +165,7 @@ function App() {
   function nameSearchSavedFilm(dataMovie, isShortMovie) {
     setIsOpenPreloader(true);
     const savedMoviesInLocalStorage = JSON.parse(localStorage.savedMovies);
+    console.log(savedMoviesInLocalStorage);
     const savedMoviesFilter = filterMovies(
       savedMoviesInLocalStorage,
       dataMovie,
