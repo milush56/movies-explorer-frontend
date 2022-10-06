@@ -1,4 +1,5 @@
-export const BASE_URL = "https://api.filmsearch.nomoredomains.xyz";
+/* export const BASE_URL = "https://api.filmsearch.nomoredomains.xyz";
+ */export const BASE_URL = "http://localhost:3000";
 
 function checkResponse(res) {
   return res.ok ? res.json() : Promise.reject(res.status);

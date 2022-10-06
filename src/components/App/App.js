@@ -40,9 +40,11 @@ function App() {
     React.useState(true);
   const [isShortMovieSearch, setIsShortMovieSearch] = React.useState(false);
   let location = useLocation();
+  const [isDisabledForm, setIsDisabledForm] = React.useState(false);
 
   function handleRegister(props) {
     setIsOpenPreloader(true);
+    setIsDisabledForm(true);
     const { name, email, password } = props;
 
     return MainApi.register(name, email, password)
@@ -53,20 +55,31 @@ function App() {
       })
       .catch((err) => {
         setRegMessage("При регистрации пользователя произошла ошибка");
+        localStorage.removeItem("jwt");
       })
-      .finally(() => setIsOpenPreloader(false));
+      .finally(() => {
+        setIsOpenPreloader(false);
+        setIsDisabledForm(false);
+      });
   }
 
   const handleLogin = (props) => {
+    setIsOpenPreloader(true);
+    setIsDisabledForm(true);
     const { email, password } = props;
     return MainApi.authorize(email, password)
       .then((data) => {
         localStorage.setItem("jwt", data.token);
-        tokenCheck();
-        history.push("/");
+        setLoggedIn(true);
+        getCurrentUser();
+        history.push("/movies");
       })
       .catch((err) => {
         setRegMessage("Что-то пошло не так! Попробуйте ещё раз");
+      })
+      .finally(() => {
+        setIsOpenPreloader(false);
+        setIsDisabledForm(false);
       });
   };
 
@@ -87,13 +100,16 @@ function App() {
   }
 
   const tokenCheck = () => {
+    const path = location.pathname;
     let jwt = localStorage.getItem("jwt");
     if (localStorage.getItem("jwt")) {
       MainApi.getContent(jwt)
         .then((res) => {
           if (res) {
-            setСurrentUser(res);
             setLoggedIn(true);
+            getCurrentUser();
+            setСurrentUser(res);
+            history.push(path);
           }
         })
         .catch((err) => {
@@ -103,6 +119,7 @@ function App() {
   };
 
   function handleUpdateUser(name, email) {
+    setIsDisabledForm(true);
     MainApi.newUser(name, email)
       .then((data) => {
         console.log(data);
@@ -110,21 +127,39 @@ function App() {
         setProfMessage("Данные изменены");
       })
       .catch((err) => {
+        localStorage.removeItem("jwt");
         if (err === 409) {
           setProfMessage("Пользователь с указанным email уже существует");
         }
+      })
+      .finally(() => {
+        setIsOpenPreloader(false);
+        setIsDisabledForm(false);
       });
   }
 
+  function toggleSaveMovie(dataMovie) {
+    const isSavedMovie = savedMovies.some((i) => i.movieId === dataMovie.id);
+    if (isSavedMovie) {
+      const savedMovie = savedMovies.find((i) => i.movieId === dataMovie.id);
+      onDelete(savedMovie);
+    }
+    if (!isSavedMovie) {
+      onSave(dataMovie);
+    }
+  }
+
   function onDelete(movie) {
-    console.log(movie);
-    const movieDeleted = savedMovies.filter((c) => c._id !== movie._id);
-    console.log(movieDeleted);
-    setSavedMovies(movieDeleted);
-    localStorage.setItem("savedMovies", JSON.stringify(movieDeleted));
-    MainApi.deleteMovies(movie._id).catch((err) => {
-      console.log("Ошибка. Запрос не выполнен: ", err);
-    });
+    MainApi.deleteMovies(movie._id)
+      .then(() => {
+        const movieDeleted = savedMovies.filter((c) => c._id !== movie._id);
+        console.log(movieDeleted);
+        setSavedMovies(movieDeleted);
+        localStorage.setItem("savedMovies", JSON.stringify(movieDeleted));
+      })
+      .catch((err) => {
+        console.log("Ошибка. Запрос не выполнен: ", err);
+      });
   }
 
   function onSave(dataMovie) {
@@ -177,17 +212,17 @@ function App() {
     setIsOpenPreloader(false);
   }
 
-  useEffect(() => {
-    tokenCheck();
-  }, []);
-
-  useEffect(() => {
-    if (location.pathname === "/movies") {
-      const savedMoviesInLocalStorage = JSON.parse(localStorage.savedMovies);
-      console.log(savedMoviesInLocalStorage);
-      setSavedMovies(savedMoviesInLocalStorage);
-    }
-  }, [location.pathname]);
+  function getCurrentUser() {
+    MainApi.getUser()
+      .then((userData) => {
+        if (userData) {
+          setСurrentUser(userData);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   React.useEffect(() => {
     if (localStorage.movies) {
@@ -227,15 +262,28 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    MoviesApi.getContent()
-      .then((movies) => {
-        setAllMovies(movies);
-        localStorage.setItem("movies", JSON.stringify(movies));
-      })
-      .catch((err) => {
-        console.log("Ошибка. Запрос не выполнен: ", err);
-      });
-  }, [currentUser]);
+    if (loggedIn) {
+      MoviesApi.getContent()
+        .then((movies) => {
+          setAllMovies(movies);
+        })
+        .catch((err) => {
+          console.log("Ошибка. Запрос не выполнен: ", err);
+        });
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  useEffect(() => {
+    if (location.pathname === "/movies" && localStorage.savedMovies !== undefined && loggedIn) {
+      const savedMoviesInLocalStorage = JSON.parse(localStorage.savedMovies);
+      console.log(savedMoviesInLocalStorage);
+      setSavedMovies(savedMoviesInLocalStorage);
+    }
+  }, [location.pathname]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -249,12 +297,21 @@ function App() {
             onUpdateUser={handleUpdateUser}
             loggedIn={loggedIn}
             profMessage={profMessage}
+            isDisabledForm={isDisabledForm}
           />
           <Route path="/signup" exact>
-            <Register onRegister={handleRegister} message={regMessage} />
+            <Register
+              onRegister={handleRegister}
+              message={regMessage}
+              isDisabledForm={isDisabledForm}
+            />
           </Route>
           <Route path="/signin" exact>
-            <Login onLogin={handleLogin} message={regMessage} />
+            <Login
+              onLogin={handleLogin}
+              message={regMessage}
+              isDisabledForm={isDisabledForm}
+            />
           </Route>
           <Route path="/" exact>
             <Main />
@@ -265,7 +322,7 @@ function App() {
             movies={movies}
             nameSearchFilm={nameSearchFilm}
             keyWordSearch={keyWordMovieSearch}
-            onSave={onSave}
+            onSave={toggleSaveMovie}
             isSuccessSearch={isSuccessSearchMovie}
             loggedIn={loggedIn}
             isShortMovieSearch={isShortMovieSearch}
@@ -280,7 +337,7 @@ function App() {
             nameSearchSavedFilm={nameSearchSavedFilm}
             loggedIn={loggedIn}
           />
-          <Route path="*">
+          <Route path="*" >
             <NotFound />
           </Route>
           <Route>

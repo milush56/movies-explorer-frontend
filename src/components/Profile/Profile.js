@@ -1,76 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, isDisabledForm} from "react";
 import "./Profile.css";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import useFormValidator from "../../hooks/useFormValidator";
 
 function Profile({ handleSignOut, onUpdateUser, profMessage }) {
   const currentUser = React.useContext(CurrentUserContext);
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [nameError, setNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [inputDisabled, setInputDisabled] = useState(true);
+  const { values, handleChange, errors, isValid } = useFormValidator({
+    name: currentUser.name,
+    email: currentUser.email,
+  });
   const [formValid, setFormValid] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
-    onUpdateUser(name, email);
-    console.log(name, email);
-    changeInputDisabled();
-  }
-
-  function handleNameChange(e) {
-    const validName = /^[a-zA-Z- ]+$/.test(e.target.value);
-
-    if (e.target.value.length < 2) {
-      setNameError("Длина имени более 2 символов");
-    } else if (e.target.value.length > 30) {
-      setNameError("Длина имени менее 30 символо");
-    } else if (!validName) {
-      setNameError("Имя должно быть указано латиницей");
-    } else {
-      setNameError("");
-    }
-    setName(e.target.value);
-  }
-
-  function handleEmailChange(e) {
-    const validEmail = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i.test(
-      e.target.value
-    );
-
-    if (!validEmail) {
-      setEmailError("Неверный формат почты");
-    } else {
-      setEmailError("");
-    }
-    setEmail(e.target.value);
-  }
-
-  function changeInputDisabled() {
-    setInputDisabled(!inputDisabled);
+    onUpdateUser(values.name, values.email);
   }
 
   useEffect(() => {
-    setName(currentUser.name);
-    setEmail(currentUser.email);
-  }, [currentUser]);
-
-  useEffect(() => {
-    if (nameError || emailError) {
-      setFormValid(false);
-    } else {
+    if (
+      (values.name !== currentUser.name ||
+        values.email !== currentUser.email) &&
+      isValid
+    ) {
       setFormValid(true);
-    }
-  }, [nameError, emailError]);
-
-  useEffect(() => {
-    if (currentUser.name === name && currentUser.email === email) {
-      setFormValid(false);
     } else {
-      setFormValid(true); 
+      setFormValid(false);
     }
-  }, [name, email, currentUser.name, currentUser.email]);
+  }, [values, currentUser, isValid]);
 
   return (
     <section className="profile">
@@ -81,15 +38,18 @@ function Profile({ handleSignOut, onUpdateUser, profMessage }) {
           <input
             type="text"
             id="name"
+            minLength={2}
+            maxLength={30}
             name="name"
             placeholder="Имя"
             className="profile__item"
             required=""
-            value={name || ""}
-            onChange={handleNameChange}
-            disabled={!inputDisabled}
+            pattern="^[a-zA-Zа-яёА-ЯЁ\-\s]+$"
+            value={values.name || ""}
+            onChange={handleChange}
+            disabled={isDisabledForm}
           ></input>
-          <span className="profile__input-error">{nameError}</span>
+          <span className="profile__input-error">{errors.name}</span>
         </div>
         <div className="profile__container">
           <span className="profile__signature">E-mail</span>
@@ -100,23 +60,26 @@ function Profile({ handleSignOut, onUpdateUser, profMessage }) {
             placeholder="Email"
             className="profile__item"
             required=""
-            value={email || ""}
-            onChange={handleEmailChange}
-            disabled={!inputDisabled}
+            pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$"
+            value={values.email || ""}
+            onChange={handleChange}
+            disabled={isDisabledForm}
           ></input>
-          <span className="profile__input-error">{emailError}</span>
+          <span className="profile__input-error">{errors.email}</span>
         </div>
       </form>
       <span className="profile__input-message">{profMessage}</span>
       <button
-        className="profile__edit"
+        className={`profile__edit ${
+          !formValid ? "profile__edit_disabled" : ""
+        }`}
         type="submit"
         disabled={!formValid}
         onClick={handleSubmit}
       >
         Редактировать
       </button>
-      <Link to="/signin" className="profile__exit" onClick={handleSignOut}>
+      <Link to="/" className="profile__exit" onClick={handleSignOut}>
         Выйти из аккаунта
       </Link>
     </section>

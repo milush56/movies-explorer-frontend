@@ -3,7 +3,7 @@ import "./Register.css";
 import logoHeader from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 
-function Register({ onRegister, message }) {
+function Register({ onRegister, message, isDisabledForm }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -90,6 +90,7 @@ function Register({ onRegister, message }) {
           max={30}
           onChange={handleChangeName}
           value={name}
+          disabled={isDisabledForm}
         ></input>
         <span className="name-error register__input-error">{nameError}</span>
         <span className="register__signature">E-mail</span>
@@ -102,6 +103,7 @@ function Register({ onRegister, message }) {
           required=""
           onChange={handleChangeEmail}
           value={email}
+          disabled={isDisabledForm}
         ></input>
         <span className="email-error register__input-error">{emailError}</span>
         <span className="register__signature">Пароль</span>
@@ -114,6 +116,7 @@ function Register({ onRegister, message }) {
           required=""
           onChange={handleChangePassword}
           value={password}
+          disabled={isDisabledForm}
         ></input>
         <span className="password-error register__input-error">
           {passwordError}

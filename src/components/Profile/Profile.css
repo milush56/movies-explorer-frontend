@@ -75,6 +75,10 @@
   background: none;
 }
 
+.profile__edit_disabled {
+  color: #e8e8e8 
+}
+
 .profile__exit {
   font-family: "Inter";
   font-style: normal;
@@ -90,13 +94,15 @@
 }
 
 .profile__input-error {
+  display: block;
+  position: absolute;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
   color: #ee3465;
-  margin-top: 5px;
+  margin-top: 15px;
 }
 
 .profile__input-message {

@@ -3,7 +3,7 @@ import "./Login.css";
 import logoHeader from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 
-function Login({ onLogin, message }) {
+function Login({ onLogin, message, isDisabledForm }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -63,6 +63,7 @@ function Login({ onLogin, message }) {
           required=""
           onChange={handleChangeEmail}
           value={email}
+          disabled={isDisabledForm}
         ></input>
         <span className="email-error login__input-error">{emailError}</span>
         <span className="login__signature">Пароль</span>
@@ -75,6 +76,7 @@ function Login({ onLogin, message }) {
           required=""
           onChange={handleChangePassword}
           value={password}
+          disabled={isDisabledForm}
         ></input>
         <span className="password-error login__input-error">{passwordError}</span>
         <span className="login-error login__input-error">{message}</span>
