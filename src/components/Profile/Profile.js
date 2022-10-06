@@ -1,10 +1,10 @@
-import React, { useState, useEffect, isDisabledForm} from "react";
+import React, { useState, useEffect } from "react";
 import "./Profile.css";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import useFormValidator from "../../hooks/useFormValidator";
 
-function Profile({ handleSignOut, onUpdateUser, profMessage }) {
+function Profile({ handleSignOut, onUpdateUser, profMessage, isDisabledForm }) {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid } = useFormValidator({
     name: currentUser.name,
