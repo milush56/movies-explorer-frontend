@@ -32,7 +32,7 @@ export const postMovies = (data) => {
       year: data.year,
       description: data.description,
       image: `https://api.nomoreparties.co/${data.image.url}`,
-      trailerLink: data.trailerLink,
+      trailerLink: data.trailerLink === data.nameEN ? `https://api.nomoreparties.co/${data.image.url}` : data.trailerLink,
       thumbnail: `https://api.nomoreparties.co/${data.image.url}`,
       movieId: `${data.id}`,
       nameRU: data.nameRU,

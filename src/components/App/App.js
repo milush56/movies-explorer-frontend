@@ -76,6 +76,8 @@ function App() {
       })
       .catch((err) => {
         setRegMessage("Что-то пошло не так! Попробуйте ещё раз");
+        localStorage.removeItem("jwt");
+        localStorage.clear();
       })
       .finally(() => {
         setIsOpenPreloader(false);
@@ -113,6 +115,8 @@ function App() {
           }
         })
         .catch((err) => {
+          localStorage.removeItem("jwt");
+          window.localStorage.clear();
           console.log(err);
         });
     }
@@ -278,7 +282,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (location.pathname === "/movies" && localStorage.savedMovies !== undefined && loggedIn) {
+    if (
+      location.pathname === "/movies" &&
+      localStorage.savedMovies !== undefined &&
+      loggedIn
+    ) {
       const savedMoviesInLocalStorage = JSON.parse(localStorage.savedMovies);
       console.log(savedMoviesInLocalStorage);
       setSavedMovies(savedMoviesInLocalStorage);
@@ -337,7 +345,7 @@ function App() {
             nameSearchSavedFilm={nameSearchSavedFilm}
             loggedIn={loggedIn}
           />
-          <Route path="*" >
+          <Route path="*">
             <NotFound />
           </Route>
           <Route>
