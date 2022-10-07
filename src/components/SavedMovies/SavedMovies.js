@@ -3,11 +3,23 @@ import "./SavedMovies.css";
 import SearchForm from "../Movies/SearchForm/SearchForm";
 import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 
-function SavedMovies() {
+function SavedMovies({
+  movies,
+  onDelete,
+  isSuccessSearch,
+  nameSearchSavedFilm
+}) {
   return (
     <section>
-      <SearchForm />
-      <MoviesCardList />
+      <SearchForm
+        nameSearchFilm={nameSearchSavedFilm}
+      />
+      <MoviesCardList
+        isSavedMoviesPage={true}
+        movies={movies}
+        onDelete={onDelete}
+        isSuccessSearch={isSuccessSearch}
+      />
     </section>
   );
 }

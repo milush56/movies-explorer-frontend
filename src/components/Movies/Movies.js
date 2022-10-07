@@ -1,15 +1,31 @@
 import React from "react";
 import "./Movies.css";
 import SearchForm from "./SearchForm/SearchForm";
-/* import Preloader from "./Preloader/Preloader"; */
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 
-function Movies() {
+function Movies({
+  movies,
+  nameSearchFilm,
+  keyWordSearch,
+  isShortMovieSearch,
+  onSave,
+  isSuccessSearch,
+  savedMovies,
+}) {
   return (
     <section>
-      <SearchForm />
-      {/* <Preloader /> */}
-      <MoviesCardList />
+      <SearchForm
+        nameSearchFilm={nameSearchFilm}
+        keyWordSearch={keyWordSearch}
+        isShortMovieSearch={isShortMovieSearch}
+      />
+      <MoviesCardList
+        isSavedMoviesPage={false}
+        movies={movies}
+        onSave={onSave}
+        isSuccessSearch={isSuccessSearch}
+        savedMovies={savedMovies}
+      />
     </section>
   );
 }

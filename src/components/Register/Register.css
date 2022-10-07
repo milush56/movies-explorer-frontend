@@ -55,7 +55,6 @@
   line-height: 12px;
   color: #ee3465;
   margin-top: 5px;
-  opacity: 0;
 }
 
 .register__button {
@@ -72,6 +71,10 @@
   border: none;
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+.register__button_disabled {
+  background: #808080;
 }
 
 .register__signup {

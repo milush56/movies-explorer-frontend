@@ -66,9 +66,17 @@
   display: flex;
   align-items: center;
   text-align: center;
-  margin: 0;
-  padding-top: 204px;
+  margin: 204px 0 0 0;
   cursor: pointer;
+  color: #000000;
+  border: none;
+  outline: none;
+  transition: 0.3s linear;
+  background: none;
+}
+
+.profile__edit_disabled {
+  color: #e8e8e8 
 }
 
 .profile__exit {
@@ -83,6 +91,28 @@
   padding-top: 16px;
   cursor: pointer;
   text-decoration: none;
+}
+
+.profile__input-error {
+  display: block;
+  position: absolute;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+  margin-top: 15px;
+}
+
+.profile__input-message {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: green;
+  margin-top: 5px;
 }
 
 @media screen and (max-width: 768px) {

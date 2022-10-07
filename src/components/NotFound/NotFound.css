@@ -34,7 +34,13 @@
   text-align: center;
   color: #2be080;
   margin: 0;
-  padding-top: 184px;
+  padding: 0px;
+  text-decoration: none;
+  margin-top: 184px;
+  background: none;
+	border: none;
+	cursor: pointer;
+	outline: inherit;
 }
 
 @media screen and (max-width: 320px) {

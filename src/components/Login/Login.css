@@ -55,7 +55,6 @@
   line-height: 12px;
   color: #ee3465;
   margin-top: 5px;
-  opacity: 0;
 }
 
 .login__button {
@@ -72,6 +71,11 @@
   border: none;
   padding-top: 15px;
   padding-bottom: 15px;
+  cursor: pointer;
+}
+
+.login__button_disabled {
+  background: #a0a0a0;
 }
 
 .login__signup {

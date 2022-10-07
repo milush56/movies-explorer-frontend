@@ -76,13 +76,17 @@
 .header__film {
   font-family: "Inter";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   padding-right: 16px;
   padding-left: 44px;
   text-decoration: none;
   color: #000000;
+}
+
+.header__film_active {
+  font-weight: 500;
 }
 
 .header__save-film {
@@ -93,6 +97,10 @@
   line-height: 18px;
   text-decoration: none;
   color: #000000;
+}
+
+.header__save-film_active {
+  font-weight: 500;
 }
 
 .header__burger {

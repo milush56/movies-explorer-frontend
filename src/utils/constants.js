@@ -1,0 +1,9 @@
+export const FORTY_DURATION = 40;
+export const DESKTOP_SIZE = 1023;
+export const TABLET_SIZE = 767;
+export const TWELWE_CARDS =12;
+export const EIGHT_CARDS =8;
+export const FIVE_CARDS =5;
+export const THREE_CARDS =3;
+export const TWO_CARDS =2;
+export const ONE_CARD =1;
